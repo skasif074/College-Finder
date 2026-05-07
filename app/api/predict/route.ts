@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-
 export async function POST(request: Request) {
   try {
     
@@ -12,7 +11,6 @@ export async function POST(request: Request) {
       return NextResponse.json([]);
     }
 
-    // Query the database safely
     const colleges = await prisma.college.findMany({
       where: {
         minRank: { lte: rank }, 
