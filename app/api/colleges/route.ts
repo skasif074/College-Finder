@@ -1,28 +1,33 @@
-import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
-const prisma = new PrismaClient();
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const search = searchParams.get('search') || '';
+    const search = searchParams.get("search") || "";
 
     const colleges = await prisma.college.findMany({
       where: {
         name: {
           contains: search,
-          mode: 'insensitive', 
-        }
+          mode: "insensitive",
+        },
       },
       orderBy: {
-        rating: 'desc'
-      }
+        rating: "desc",
+      },
     });
 
     return NextResponse.json(colleges);
   } catch (error) {
     console.error("Error fetching colleges:", error);
-    return NextResponse.json({ error: "Failed to fetch colleges" }, { status: 500 });
+
+    return NextResponse.json(
+      { error: "Failed to fetch colleges" },
+      { status: 500 }
+    );
   }
 }

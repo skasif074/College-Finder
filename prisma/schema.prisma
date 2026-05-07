@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/client"
 }
 
 datasource db {
@@ -15,7 +14,7 @@ model College {
   location    String
   fees        Int
   rating      Float
-  courses     String[] 
+  courses     String[]
   description String
   minRank     Int      @default(1)
   maxRank     Int      @default(100000)
