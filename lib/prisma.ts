@@ -1,0 +1,10 @@
+// Import from the custom generated folder we created
+import { PrismaClient } from '../generated/client'
+
+const globalForPrisma = global as unknown as { prisma: PrismaClient }
+
+export const prisma = 
+  globalForPrisma.prisma || 
+  new PrismaClient()
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
